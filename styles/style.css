@@ -1,0 +1,127 @@
+* {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    text-transform: none;
+    transition: 0.2s ease;
+}
+
+:root {
+    --border-table: 0.4rem solid;
+    --background: #faf8ef;
+    --button-background: #bbada0;
+    --new-game-button-background: #8f7a66;
+    --color-2-4:#776e65;
+    --color-8-to-2048: #f9f6f2;
+    --color-2-background: #eee4da;
+    --color-4-background: #ede0c8;
+    --color-8-background: #f2b179;
+    --color-16-background: #f59563;
+    --color-32-background: #f67c5f;
+    --color-64-background: #f65e3b;
+    --color-128-background: #edcf72;
+    --color-256-background: #edcc61;
+    --color-512-background: #edc850;
+    --color-1024-background: #edc53f;
+    --color-2048-background: #edc22e;
+}
+
+/*! base html codes  */
+html {
+    font-size: 62.5%;
+    overflow-x: hidden;
+}
+
+/*! header start  */
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin: 3rem 7%;
+    padding: 1rem 0;
+    border-radius: 5rem;
+    background-color: var(--new-game-button-background);
+    position: sticky;
+    top: 2rem;
+    z-index: 100;
+    filter: brightness(100%);
+}
+
+header:hover{
+    filter: brightness(110%);
+    box-shadow: 0px 0px 25px 1px rgb(0 0 0 / 100%);
+}
+
+.icon-container{
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0.3rem 7.145rem;
+    display: flex;
+    text-align: center;
+}
+
+.symbol-container{
+    display: flex;  
+}
+
+header .ref-container {
+    display: flex;
+    align-items: center;
+}
+
+
+header .ref-container div{
+    font-size: 2rem;
+    padding: 0.3rem 0.6rem;
+    color: var(--background);
+}
+
+header .icon-container:hover,
+header .ref-container div:hover
+{
+    cursor: pointer;
+    border-bottom: 0.2rem solid var(--background);
+    
+}
+/*! header end  */
+
+/*! page 1 start  */
+body {
+    background-color:var(--background);
+    margin-top: 0rem;
+    
+}
+body .page-1 {
+    height: calc(100vh - 13.45rem);
+}
+.container-2048 {
+    display: flex;
+    justify-content: center;
+    margin: 3rem 7%;
+}
+
+.table-2048 {
+    border-spacing: 0rem;
+    border-collapse: collapse;
+    
+}
+
+.table-2048 tr td {
+    width: 5rem;
+    height: 5rem;
+    border: var(--border-table);  
+    border-color: var(--button-background);
+    border-radius: 0.5rem;
+}
+/*! page 1 end  */
+
+body .page-2 {
+    background-color:var(--button-background);
+    min-height: 100vh;
+}
+
+
