@@ -14,6 +14,8 @@
     --background: #faf8ef;
     --button-background: #bbada0;
     --new-game-button-background: #8f7a66;
+    --game-background: #CCC0B3;
+    --game-border-color:#bbada0;
     --color-2-4:#776e65;
     --color-8-to-2048: #f9f6f2;
     --color-2-background: #eee4da;
@@ -106,17 +108,46 @@ body .page-1 {
 
 .table-2048 {
     border-spacing: 0rem;
-    border-collapse: collapse;
-    
+    border-collapse: separate;
+    border:var(--border-table);
+    border-color: var(--game-border-color);
+    border-radius: 0.5rem;
+    background-color: var(--button-background);
 }
 
 .table-2048 tr td {
     width: 5rem;
     height: 5rem;
     border: var(--border-table);  
-    border-color: var(--button-background);
+    border-color: var(--game-border-color);
     border-radius: 0.5rem;
+    background-color: var(--game-background);
+
 }
+@keyframes creation-animation {
+    0% {
+        font-size: 0rem;
+        width: 0rem;
+        height: 0rem;
+        background-color: var(--game-background);
+
+    }
+    100% {
+        font-size: 2.5rem;
+        width:5rem;
+        height: 5rem;
+        background-color: var(--color-2-background);
+    }
+}
+.table-cell-creation {
+    animation: creation-animation 0.5s;
+    animation-fill-mode: forwards;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+}
+
 /*! page 1 end  */
 
 body .page-2 {
