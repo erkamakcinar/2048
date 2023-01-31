@@ -141,11 +141,19 @@ body .page-1 {
 }
 .table-cell-creation {
     animation: creation-animation 0.5s;
+    color: var(--color-2-4);
+    border-radius: 0.2rem;
     animation-fill-mode: forwards;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;    
+}
+
+.table-cell {
+    transition : all 0.3s ease-in-out;
+    transform : translate(5px, 5px);
+
 }
 
 /*! page 1 end  */
