@@ -1,170 +1,197 @@
 export default class Game {
+  board = [
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+  ];
+  score = 0;
+  rows = 4;
+  columns = 4;
 
-    /* 
-    A board entry has 2 properties
-    entry is a dom element
-    number is the value of the element
-    */
-    board = [];
-    emptyCell = 16;
+  constructor() {
+    this.addKeyboard();
+    this.setGame();
+  }
 
-    constructor() {
-        const table = document.querySelectorAll("td");
-
-        for (let i = 0; i < 4; i++) {
-            const row = [];
-            for (let j = 0; j < 4; j++) {
-                row[j] = {};
-                row[j].entry = table[(i * 4) + j];
-                row[j].number = -1;
-            }
-
-            this.board.push(row);
-        }
+  updateTile(tile, num) {
+    tile.innerText = "";
+    tile.classList.value = ""; //clear the classList
+    tile.classList.add("tile");
+    if (num > 0) {
+      tile.innerText = num.toString();
+      if (num <= 4096) {
+        tile.classList.add("x" + num.toString());
+      } else {
+        tile.classList.add("x8192");
+      }
     }
+  }
 
-    fillTable() {
+  setGame() {
+    // board = [
+    //     [2, 2, 2, 2],
+    //     [2, 2, 2, 2],
+    //     [4, 4, 8, 8],
+    //     [4, 4, 8, 8]
+    // ];
 
-        let randomNumber = Math.floor(Math.random() * this.emptyCell) + 1;
-        let count = 1;
-        for (const row of this.board) {
-            for (const cell of row) {
-                if (cell.number != -1) {
-                    continue;
-                }
-                else {
-                    if (count == randomNumber) {
-                        cell.number = 2;
-                        const entry = document.createElement('div');
-                        entry.classList.add('table-cell-creation');
-                        entry.textContent = '2';
-                        cell.entry.appendChild(entry);
-                        break;
-                    }
-                    else {
-                        count += 1;
-                    }
-                }
-            }
-            if (count == randomNumber) {
-                break;
-            }
-        }
-        this.emptyCell--;
+    for (let r = 0; r < this.rows; r++) {
+      for (let c = 0; c < this.columns; c++) {
+        let tile = document.createElement("div");
+        tile.id = r.toString() + "-" + c.toString();
+        let num = this.board[r][c];
+        this.updateTile(tile, num);
+        document.getElementById("container-2048").append(tile);
+      }
     }
+    //create 2 to begin the game
+    this.setTwo();
+    this.setTwo();
+  }
 
-    moveLeft() {
-        /* 
-        A splitted board entry has 2 properties
-        cell is a board entry
-        row index is the row index of board
-        column index is the column index of board
-        */
-        const splittedBoard = []
-        for (let rowIndex = 0 ; rowIndex < this.board.length; rowIndex++) {
-            let splittedRow = [];
-            let splittedRowEntry = {};
-            for (let columnIndex = 0; columnIndex < this.board[rowIndex].length; columnIndex++) {
-                if (this.board[rowIndex][columnIndex].number != -1) {
-                    splittedRowEntry.cell = this.board[rowIndex][columnIndex];
-                    splittedRowEntry.boardRowIndex = rowIndex;
-                    splittedRowEntry.boardColumnIndex = columnIndex;
-                    splittedRow.push(splittedRowEntry);
-                }
-            }
-            splittedBoard.push(splittedRow);
-        }
+  addKeyboard() {
+    document.addEventListener("keyup", (e) => {
+      if (e.code == "ArrowLeft") {
+        this.slideLeft();
+        this.setTwo();
+      } else if (e.code == "ArrowRight") {
+        this.slideRight();
+        this.setTwo();
+      } else if (e.code == "ArrowUp") {
+        this.slideUp();
+        this.setTwo();
+      } else if (e.code == "ArrowDown") {
+        this.slideDown();
+        this.setTwo();
+      }
+      document.getElementById("score").innerText = this.score;
+    });
+  }
 
-        //table index is the row index of board
-        let tableIndex = 0;
+  filterZero(row) {
+    return row.filter((num) => num != 0); //create new array of all nums != 0
+  }
 
-        for (let splittedRow of splittedBoard) {
-            if (splittedRow.length != 0) {
+  slide(row) {
+    //[0, 2, 2, 2]
+    row = this.filterZero(row); //[2, 2, 2]
+    for (let i = 0; i < row.length - 1; i++) {
+      if (row[i] == row[i + 1]) {
+        row[i] *= 2;
+        row[i + 1] = 0;
+        this.score += row[i];
+      }
+    } //[4, 0, 2]
+    row = this.filterZero(row); //[4, 2]
+    //add zeroes
+    while (row.length < this.columns) {
+      row.push(0);
+    } //[4, 2, 0, 0]
+    return row;
+  }
 
-                //empty entry
-                let tableDiv = document.createElement('div');
-
-                //table row index is the column index of board
-                let tableRowIndex = 0;
-
-                //traversing trimmed rows
-                for (let splittedIndex = 0; splittedIndex < splittedRow.length - 1; splittedIndex++) {
-
-                    // Is the element in the index equal to the next element?
-                    if (splittedRow[splittedIndex] == splittedRow[splittedIndex + 1]) {
-                        this.board[tableIndex][tableRowIndex].number = splittedRow[splittedIndex].cell.number + splittedRow[splittedIndex + 1].cell.number;
-                        tableDiv.textContent = this.board[tableIndex][tableRowIndex].number;
-                        this.board[tableIndex][tableRowIndex].entry.appendChild(tableDiv);
-                        this.board[tableIndex][tableRowIndex].entry.style.transition = 'all 0.3s ease-in-out';
-                        this.board[tableIndex][tableRowIndex].entry.style.transform = `translate(5px, 5px)`;
-                        splittedIndex++;
-
-                    }
-                    else {
-                        this.board[tableIndex][tableRowIndex].number = splittedRow[splittedIndex].cell.number;
-                        tableDiv.textContent = this.board[tableIndex][tableRowIndex].number;
-                        this.board[tableIndex][tableRowIndex].entry.appendChild(tableDiv);
-                        this.board[tableIndex][tableRowIndex].entry.style.transition = 'all 0.3s ease-in-out';
-                        this.board[tableIndex][tableRowIndex].entry.style.transform = `translate(5px, 5px)`;
-                    }
-                    tableRowIndex++;
-                }
-                this.board[tableIndex][tableRowIndex].number = splittedRow[splittedRow.length - 1].cell.number;
-                tableDiv.textContent = this.board[tableIndex][tableRowIndex].number;
-                this.board[tableIndex][tableRowIndex].entry.appendChild(tableDiv);
-                tableDiv.style.transition = 'all 2s ease-in-out';
-                tableDiv.style.transform = `translate(55px, 45px)`;
-                tableIndex++;
-            }
-            else {
-                tableIndex++;
-                continue;
-            }
-        }
-
-        /*
-        for(let row of this.board) {
-            let emptyFlag = false;
-            let fullFlag = false;
-            for(let i = 0; i < row.length; i++) {
-                let emptyEnty = {};
-                let entry1 = {};
-                if(row[i].number == -1 && !emptyFlag) {
-                    emptyEnty = row[i];
-                    emptyFlag = true;
-                }
-                else {
-                    if(row[i].number == -1 && !fullFlag) {
-                        continue
-                    }
-                    
-                    else {
-                        if(fullFlag) {
-                            const entry = document.createElement('div');
-                            if(emptyFlag) {
-                                emptyEnty.number = entry1.number + row[i].number;
-                                entry.textContent = emptyEnty.number;
-                                emptyEnty.entry.appendChild(entry);
-                                emptyFlag = false;
-                            } 
-                            else {
-                                entry1.number = entry1.number + row[i].number;
-                                entry.textContent = entry1.number;
-                                entry1.entry.appendChild(entry);
-                            }
-                            row[i].entry.remove()
-                            row[i].number = -1;
-                            fullFlag = false;
-                        }
-                        else {
-                            entry1 = row[i];
-                            fullFlag = true;
-                            continue;
-                        }
-                    }
-                }
-            }
-        }
-        */
+  slideLeft() {
+    for (let r = 0; r < this.rows; r++) {
+      let row = this.board[r];
+      row = this.slide(row);
+      this.board[r] = row;
+      for (let c = 0; c < this.columns; c++) {
+        let tile = document.getElementById(r.toString() + "-" + c.toString());
+        let num = this.board[r][c];
+        this.updateTile(tile, num);
+      }
     }
+  }
+
+  slideRight() {
+    for (let r = 0; r < this.rows; r++) {
+      let row = this.board[r]; //[0, 2, 2, 2]
+      row.reverse(); //[2, 2, 2, 0]
+      row = slide(row); //[4, 2, 0, 0]
+      this.board[r] = row.reverse(); //[0, 0, 2, 4];
+      for (let c = 0; c < this.columns; c++) {
+        let tile = document.getElementById(r.toString() + "-" + c.toString());
+        let num = this.board[r][c];
+        this.updateTile(tile, num);
+      }
+    }
+  }
+
+  slideUp() {
+    for (let c = 0; c < this.columns; c++) {
+      let row = [
+        this.board[0][c],
+        this.board[1][c],
+        this.board[2][c],
+        this.board[3][c],
+      ];
+      row = this.slide(row);
+      // board[0][c] = row[0];
+      // board[1][c] = row[1];
+      // board[2][c] = row[2];
+      // board[3][c] = row[3];
+      for (let r = 0; r < this.rows; r++) {
+        this.board[r][c] = row[r];
+        let tile = document.getElementById(r.toString() + "-" + c.toString());
+        let num = this.board[r][c];
+        this.updateTile(tile, num);
+      }
+    }
+  }
+
+  slideDown() {
+    for (let c = 0; c < this.columns; c++) {
+      let row = [
+        this.board[0][c],
+        this.board[1][c],
+        this.board[2][c],
+        this.board[3][c],
+      ];
+      row.reverse();
+      row = this.slide(row);
+      row.reverse();
+      // board[0][c] = row[0];
+      // board[1][c] = row[1];
+      // board[2][c] = row[2];
+      // board[3][c] = row[3];
+      for (let r = 0; r < this.rows; r++) {
+        this.board[r][c] = row[r];
+        let tile = document.getElementById(r.toString() + "-" + c.toString());
+        let num = this.board[r][c];
+        this.updateTile(tile, num);
+      }
+    }
+  }
+
+  setTwo() {
+    if (!this.hasEmptyTile()) {
+      return;
+    }
+    let found = false;
+    while (!found) {
+      //find random row and column to place a 2 in
+      let r = Math.floor(Math.random() * this.rows);
+      let c = Math.floor(Math.random() * this.columns);
+      if (this.board[r][c] == 0) {
+        this.board[r][c] = 2;
+        let tile = document.getElementById(r.toString() + "-" + c.toString());
+        tile.innerText = "2";
+        tile.classList.add("x2");
+        found = true;
+      }
+    }
+  }
+
+  hasEmptyTile() {
+    for (let r = 0; r < this.rows; r++) {
+      for (let c = 0; c < this.columns; c++) {
+        if (this.board[r][c] == 0) {
+          //at least one zero in the board
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 }
