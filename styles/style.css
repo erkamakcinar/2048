@@ -1,166 +1,196 @@
 * {
-    font-family: "Poppins", sans-serif;
-    margin: 0;
-    padding: 0;
-    outline: none;
-    border: none;
-    text-decoration: none;
-    text-transform: none;
-    transition: 0.2s ease;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  text-transform: none;
+  transition: 0.2s ease;
 }
 
 :root {
-    --border-table: 0.4rem solid;
-    --background: #faf8ef;
-    --button-background: #bbada0;
-    --new-game-button-background: #8f7a66;
-    --game-background: #CCC0B3;
-    --game-border-color:#bbada0;
-    --color-2-4:#776e65;
-    --color-8-to-2048: #f9f6f2;
-    --color-2-background: #eee4da;
-    --color-4-background: #ede0c8;
-    --color-8-background: #f2b179;
-    --color-16-background: #f59563;
-    --color-32-background: #f67c5f;
-    --color-64-background: #f65e3b;
-    --color-128-background: #edcf72;
-    --color-256-background: #edcc61;
-    --color-512-background: #edc850;
-    --color-1024-background: #edc53f;
-    --color-2048-background: #edc22e;
+  --border-table: 0.4rem solid;
+  --background: #faf8ef;
+  --button-background: #bbada0;
+  --new-game-button-background: #8f7a66;
+  --game-background: #ccc0b3;
+  --game-border-color: #bbada0;
+  --color-2-4: #776e65;
+  --color-8-to-2048: #f9f6f2;
+  --color-2-background: #eee4da;
+  --color-4-background: #ede0c8;
+  --color-8-background: #f2b179;
+  --color-16-background: #f59563;
+  --color-32-background: #f67c5f;
+  --color-64-background: #f65e3b;
+  --color-128-background: #edcf72;
+  --color-256-background: #edcc61;
+  --color-512-background: #edc850;
+  --color-1024-background: #edc53f;
+  --color-2048-background: #edc22e;
 }
 
 /*! base html codes  */
 html {
-    font-size: 62.5%;
-    overflow-x: hidden;
+  font-size: 62.5%;
+  overflow-x: hidden;
 }
 
 /*! header start  */
 header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    margin: 3rem 7%;
-    padding: 1rem 0;
-    border-radius: 5rem;
-    background-color: var(--new-game-button-background);
-    position: sticky;
-    top: 2rem;
-    z-index: 100;
-    filter: brightness(100%);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin: 3rem 7%;
+  padding: 1rem 0;
+  border-radius: 5rem;
+  background-color: var(--new-game-button-background);
+  /*position: sticky;*/
+  top: 2rem;
+  /* z-index: 100; */
+  filter: brightness(100%);
 }
 
-header:hover{
-    filter: brightness(110%);
-    box-shadow: 0px 0px 25px 1px rgb(0 0 0 / 100%);
+header:hover {
+  filter: brightness(110%);
+  box-shadow: 0px 0px 25px 1px rgb(0 0 0 / 100%);
 }
 
-.icon-container{
-    width: 2.5rem;
-    height: 2.5rem;
-    padding: 0.3rem 7.145rem;
-    display: flex;
-    text-align: center;
+.icon-container {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0.3rem 7.145rem;
+  display: flex;
+  text-align: center;
 }
 
-.symbol-container{
-    display: flex;  
+.symbol-container {
+  display: flex;
 }
 
 header .ref-container {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
-
-header .ref-container div{
-    font-size: 2rem;
-    padding: 0.3rem 0.6rem;
-    color: var(--background);
+header .ref-container div {
+  font-size: 2rem;
+  padding: 0.3rem 0.6rem;
+  color: var(--background);
 }
 
 header .icon-container:hover,
-header .ref-container div:hover
-{
-    cursor: pointer;
-    border-bottom: 0.2rem solid var(--background);
-    
+header .ref-container div:hover {
+  cursor: pointer;
+  border-bottom: 0.2rem solid var(--background);
 }
 /*! header end  */
 
 /*! page 1 start  */
 body {
-    background-color:var(--background);
-    margin-top: 0rem;
-    
+  background-color: var(--background);
+  margin-top: 0rem;
 }
 body .page-1 {
-    height: calc(100vh - 13.45rem);
+  height: calc(100vh - 13.45rem);
 }
-.container-2048 {
-    display: flex;
-    justify-content: center;
-    margin: 3rem 7%;
+hr {
+  width: 500px;
 }
 
-.table-2048 {
-    border-spacing: 0rem;
-    border-collapse: separate;
-    border:var(--border-table);
-    border-color: var(--game-border-color);
-    border-radius: 0.5rem;
-    background-color: var(--button-background);
+#container-2048 {
+  width: 400px;
+  height: 400px;
+
+  background-color: #cdc1b5;
+  border: 6px solid #bbada0;
+
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.table-2048 tr td {
-    width: 5rem;
-    height: 5rem;
-    border: var(--border-table);  
-    border-color: var(--game-border-color);
-    border-radius: 0.5rem;
-    background-color: var(--game-background);
+.tile {
+  width: 90px;
+  height: 90px;
+  border: 5px solid #bbada0;
 
-}
-@keyframes creation-animation {
-    0% {
-        font-size: 0rem;
-        width: 0rem;
-        height: 0rem;
-        background-color: var(--game-background);
-
-    }
-    100% {
-        font-size: 2.5rem;
-        width:5rem;
-        height: 5rem;
-        background-color: var(--color-2-background);
-    }
-}
-.table-cell-creation {
-    animation: creation-animation 0.5s;
-    color: var(--color-2-4);
-    border-radius: 0.2rem;
-    animation-fill-mode: forwards;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;    
+  font-size: 40px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.table-cell {
-    transition : all 0.3s ease-in-out;
-    transform : translate(5px, 5px);
+/* colored tiles */
 
+.x2 {
+  background-color: #eee4da;
+  color: #727371;
 }
 
-/*! page 1 end  */
+.x4 {
+  background-color: #ece0ca;
+  color: #727371;
+}
 
+.x8 {
+  background-color: #f4b17a;
+  color: white;
+}
+
+.x16 {
+  background-color: #f59575;
+  color: white;
+}
+
+.x32 {
+  background-color: #f57c5f;
+  color: white;
+}
+
+.x64 {
+  background-color: #f65d3b;
+  color: white;
+}
+
+.x128 {
+  background-color: #edce71;
+  color: white;
+}
+
+.x256 {
+  background-color: #edcc63;
+  color: white;
+}
+
+.x512 {
+  background-color: #edc651;
+  color: white;
+}
+
+.x1024 {
+  background-color: #eec744;
+  color: white;
+}
+
+.x2048 {
+  background-color: #ecc230;
+  color: white;
+}
+
+.x4096 {
+  background-color: #fe3d3d;
+  color: white;
+}
+
+.x8192 {
+  background-color: #ff2020;
+  color: white;
+}
 body .page-2 {
-    background-color:var(--button-background);
-    min-height: 100vh;
+  background-color: var(--button-background);
+  min-height: 100vh;
 }
-
-
