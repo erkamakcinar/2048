@@ -108,7 +108,7 @@ export default class Game {
     for (let r = 0; r < this.rows; r++) {
       let row = this.board[r]; //[0, 2, 2, 2]
       row.reverse(); //[2, 2, 2, 0]
-      row = slide(row); //[4, 2, 0, 0]
+      row = this.slide(row); //[4, 2, 0, 0]
       this.board[r] = row.reverse(); //[0, 0, 2, 4];
       for (let c = 0; c < this.columns; c++) {
         let tile = document.getElementById(r.toString() + "-" + c.toString());
