@@ -1,5 +1,10 @@
 import Game from "./game.js";
-let a = new Game();
+import AI from "./ai.js";
+let ai = new AI();
+ai.solve();
+ai.solve();
+
+//let a = new Game();
 /*
 a.fillTable();
 a.moveLeft();
