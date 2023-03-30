@@ -1,5 +1,5 @@
-import Aii from "./aii.js";
-let ai = new Aii();
+import Ai from "./ai.js";
+let ai = new Ai();
 document.addEventListener("keyup", (e) => {
   if (e.code == "ArrowLeft") {
     ai.solve();

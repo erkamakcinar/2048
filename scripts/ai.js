@@ -1,5 +1,5 @@
 import Game from "./game.js";
-export default class Aii {
+export default class Ai {
   constructor() {
     this.game = new Game();
     this.gameState = this.game.board;
