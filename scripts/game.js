@@ -1,16 +1,15 @@
 export default class Game {
-  board = [
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-  ];
-  score = 0;
-  rows = 4;
-  columns = 4;
-
   constructor() {
-    this.addKeyboard();
+    this.board = [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ];
+    this.score = 0;
+    this.rows = 4;
+    this.columns = 4;
+    //this.addKeyboard();
     this.setGame();
   }
 
