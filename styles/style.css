@@ -13,7 +13,7 @@
   --border-table: 0.4rem solid;
   --background: #faf8ef;
   --button-background: #bbada0;
-  --new-game-button-background: #8f7a66;
+  --header-background: #8f7a66;
   --game-background: #ccc0b3;
   --game-border-color: #bbada0;
   --color-2-4: #776e65;
@@ -46,7 +46,7 @@ header {
   margin: 3rem 7%;
   padding: 1rem 0;
   border-radius: 5rem;
-  background-color: var(--new-game-button-background);
+  background-color: var(--header-background);
   /*position: sticky;*/
   top: 2rem;
   /* z-index: 100; */
@@ -88,13 +88,15 @@ header .ref-container div:hover {
 }
 /*! header end  */
 
-/*! page 1 start  */
+/*! page start  */
 body {
   background-color: var(--background);
   margin-top: 0rem;
 }
+
 body .page-1 {
-  height: calc(100vh - 13.45rem);
+  display: flex;
+  justify-content: center;
 }
 hr {
   width: 500px;
@@ -106,8 +108,7 @@ hr {
 
   background-color: #cdc1b5;
   border: 6px solid #bbada0;
-
-  margin: 0 auto;
+  margin: 9% 5px;
   display: flex;
   flex-wrap: wrap;
 }
@@ -190,7 +191,44 @@ hr {
   background-color: #ff2020;
   color: white;
 }
-body .page-2 {
-  background-color: var(--button-background);
-  min-height: 100vh;
+
+.button-container {
+  height: 400px;
+
+  /* top | right | bottom | left */
+  margin: 9% 0 9% 50px;
 }
+.button-solve {
+  background: var(--header-background);
+  border: 1px solid var(--button-background);
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 16px;
+  min-height: 40px;
+  outline: 0;
+  padding: 12px 14px;
+  text-align: center;
+  text-rendering: geometricprecision;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+}
+
+.button-solve:hover,
+.button-solve:active {
+  background-position: 0 0;
+}
+
+.button-solve:active {
+  opacity: 0.5;
+}
+/*! page end  */

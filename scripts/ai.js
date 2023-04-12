@@ -18,24 +18,62 @@ export default class Ai {
   }
   // Define the evaluation function
   evaluateState(state) {
-    // Returns a score for the given game state
     let score = 0;
+    let emptyTiles = 0;
     let maxTile = 0;
+    const weights = [
+      [32768, 16384, 8192, 4096],
+      [2048, 1024, 512, 256],
+      [128, 64, 32, 16],
+      [8, 4, 2, 1],
+    ];
+
+    // Calculate score, empty tiles, and max tile
     for (let i = 0; i < this.BOARD_SIZE; i++) {
       for (let j = 0; j < this.BOARD_SIZE; j++) {
-        score += state[i][j];
-        maxTile = Math.max(maxTile, state[i][j]);
+        if (state[i][j] === 0) {
+          emptyTiles++;
+        } else {
+          score += weights[i][j] * state[i][j];
+          maxTile = Math.max(maxTile, state[i][j]);
+        }
       }
     }
-    // Add a bonus for having the max tile in the corner
+
+    // Add bonus for having max tile in the corner
     if (
       state[0][0] === maxTile ||
       state[0][this.BOARD_SIZE - 1] === maxTile ||
       state[this.BOARD_SIZE - 1][0] === maxTile ||
       state[this.BOARD_SIZE - 1][this.BOARD_SIZE - 1] === maxTile
     ) {
-      score += maxTile * 10;
+      score += maxTile * 100;
     }
+
+    // Subtract penalty for empty tiles
+    score -= emptyTiles * 20;
+
+    // Add bonus for adjacent tiles of same value
+    for (let i = 0; i < this.BOARD_SIZE; i++) {
+      for (let j = 0; j < this.BOARD_SIZE; j++) {
+        const currTile = state[i][j];
+        if (currTile !== 0) {
+          if (i > 0 && state[i - 1][j] === currTile) {
+            score += weights[i - 1][j] * currTile * 2;
+          }
+          if (j > 0 && state[i][j - 1] === currTile) {
+            score += weights[i][j - 1] * currTile * 2;
+          }
+          if (i < this.BOARD_SIZE - 1 && state[i + 1][j] === currTile) {
+            score += weights[i + 1][j] * currTile * 2;
+          }
+          if (j < this.BOARD_SIZE - 1 && state[i][j + 1] === currTile) {
+            score += weights[i][j + 1] * currTile * 2;
+          }
+        }
+      }
+    }
+
     return score;
   }
 
@@ -263,6 +301,29 @@ export default class Ai {
     }
     if (bestMove !== null) {
       this.makeActualMove(bestMove);
+      return true;
+    } else {
+      return false;
+    }
+  }
+  printGameTree(state, depth) {
+    console.log("Depth:", depth, "State:", state);
+
+    if (depth === 0) {
+      return;
+    }
+
+    for (let move of [
+      this.MOVE_UP,
+      this.MOVE_RIGHT,
+      this.MOVE_DOWN,
+      this.MOVE_LEFT,
+    ]) {
+      let newState = this.makeMove(state, move);
+      console.log("move:", move, "State:", state);
+      if (newState !== null) {
+        this.printGameTree(newState, depth - 1);
+      }
     }
   }
 }

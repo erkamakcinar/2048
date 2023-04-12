@@ -193,4 +193,21 @@ export default class Game {
     }
     return false;
   }
+  isGameOver() {
+    if (this.hasEmptyTile()) {
+      return false;
+    }
+    //check if any tiles can be combined
+    for (let r = 0; r < this.row - 1; r++) {
+      for (let c = 0; c < this.columns - 1; c++) {
+        if (this.board[r][c] == this.board[r][c + 1]) {
+          return false;
+        }
+        if (this.board[r][c] == this.board[r + 1][c]) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
 }
