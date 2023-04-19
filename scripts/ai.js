@@ -16,8 +16,32 @@ export default class Ai {
     // Returns a copy of the given game state
     return state.map((row) => [...row]);
   }
+
   // Define the evaluation function
-  evaluateState(state) {
+  evaluateState1(state) {
+    // Returns a score for the given game state
+    let score = 0;
+    let maxTile = 0;
+    for (let i = 0; i < this.BOARD_SIZE; i++) {
+      for (let j = 0; j < this.BOARD_SIZE; j++) {
+        score += state[i][j];
+        maxTile = Math.max(maxTile, state[i][j]);
+      }
+    }
+    // Add a bonus for having the max tile in the corner
+    if (
+      state[0][0] === maxTile ||
+      state[0][this.BOARD_SIZE - 1] === maxTile ||
+      state[this.BOARD_SIZE - 1][0] === maxTile ||
+      state[this.BOARD_SIZE - 1][this.BOARD_SIZE - 1] === maxTile
+    ) {
+      score += maxTile * 10;
+    }
+    return score;
+  }
+
+  // Define the evaluation function
+  evaluateState2(state) {
     let score = 0;
     let emptyTiles = 0;
     let maxTile = 0;
@@ -75,6 +99,10 @@ export default class Ai {
     }
 
     return score;
+  }
+
+  evaluateState(state) {
+    return this.evaluateState2(state);
   }
 
   // Implement the minimax algorithm with alpha-beta pruning

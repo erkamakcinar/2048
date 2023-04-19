@@ -9,7 +9,7 @@ function startSolving() {
     } else {
       isGameOver = ai.solve();
     }
-  }, 50); // 1000 milliseconds = 1 second
+  }, 1); // 1000 milliseconds = 1 second
 }
 
 // Event listener for button click
